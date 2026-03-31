@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Professional Form</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102,126,234,0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .success {
+            text-align: center;
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-container">
+    <h2>Contact Us</h2>
+
+    <form id="myForm">
+        <div class="input-group">
+            <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="input-group">
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="phone" placeholder="Phone Number">
+        </div>
+
+        <button type="submit">Submit</button>
+
+        <div class="success" id="successMsg">
+            ✅ Submitted Successfully!
+        </div>
+    </form>
+</div>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const btn = document.querySelector("button");
+    btn.innerText = "Submitting...";
+    btn.disabled = true;
+
+    const data = {
+        name: this.name.value,
+        email: this.email.value,
+        phone: this.phone.value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwOB7vSEqb5ugnJowin4UheeB2yxzdLN7Hw5lyOdiyZWXn9Mhb0_QuLQ_5Yrt3g-TfY-g/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(response => {
+        document.getElementById("successMsg").style.display = "block";
+        document.getElementById("myForm").reset();
+        btn.innerText = "Submit";
+        btn.disabled = false;
+    })
+    .catch(err => {
+        alert("Error submitting form");
+        btn.innerText = "Submit";
+        btn.disabled = false;
+    });
+});
+</script>
+
+</body>
+</html>
